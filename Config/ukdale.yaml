@@ -1,0 +1,70 @@
+model:
+  target: Models.gaussian_diffusion.Diffusion_NILM
+  params:
+    seq_length: 256
+    feature_size: 5
+    n_layer_enc: 2
+    n_layer_dec: 2
+    d_model: 96 
+    timesteps: 100
+    sampling_timesteps: 100
+    loss_type: 'l1'
+    beta_schedule: 'cosine'
+    n_heads: 4
+    mlp_hidden_times: 4
+    attn_pd: 0.0
+    resid_pd: 0.0
+    kernel_size: 1
+    padding_size: 0
+
+solver:
+  base_lr: 1.0e-5
+  max_epochs: 60000
+  results_folder: ./Checkpoints_ukdale
+  gradient_accumulate_every: 2
+  save_cycle: 6000  # max_epochs // 10
+  ema:
+    decay: 0.995
+    update_interval: 10
+  
+  scheduler:
+    target: engine.lr_sch.ReduceLROnPlateauWithWarmup
+    params:
+      factor: 0.5
+      patience: 5000
+      min_lr: 1.0e-5
+      threshold: 1.0e-1
+      threshold_mode: rel
+      warmup_lr: 8.0e-4
+      warmup: 500 
+      verbose: False
+
+dataloader:
+  train_dataset:
+    target: Utils.Data_utils.real_datasets.CustomDataset
+    params:
+      name: ukdale
+      proportion: 1.0 
+      window: 256
+      save2npy: False
+      seed: 123
+      period: train
+      strides: 64
+
+  test_dataset:
+    target: Utils.Data_utils.real_datasets.CustomDataset
+    params:
+      name: ukdale
+      proportion: 0.0 
+      window: 256
+      save2npy: True
+      seed: 123
+      period: test
+      strides: 64
+    coefficient: 1.0e-2
+    step_size: 5.0e-2
+    sampling_steps: 200
+
+  batch_size: 128
+  sample_size: 256
+  shuffle: True
