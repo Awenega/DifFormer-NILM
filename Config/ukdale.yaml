@@ -16,6 +16,7 @@ model:
     resid_pd: 0.0
     kernel_size: 1
     padding_size: 0
+    use_ff: True
 
 solver:
   base_lr: 1.0e-5
