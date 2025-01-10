@@ -122,8 +122,9 @@ class UK_DALE_Dataset(Dataset):
         return entire_data.values[:, 0].reshape(-1, 1), entire_data.values[:, 1:], timestamp.to_numpy()
 
 def check_metrics():
-    ground_truth = np.load("OUTPUT/ukdale/samples/ukdale_ground_truth_256_test.npy")[:, :, :1]
     fake = np.load("OUTPUT/ukdale/ddpm_fake_ukdale_unnormalized.npy")
+    max_samples = fake.shape[0]
+    ground_truth = np.load("OUTPUT/ukdale/samples/ukdale_ground_truth_256_test.npy")[:max_samples, :, :1]
     print(ground_truth.shape, fake.shape)
 
     mae = np.mean(np.abs(fake - ground_truth))
