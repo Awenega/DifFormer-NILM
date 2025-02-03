@@ -1,2 +1,2 @@
-# DifFormer-NILM: A diffusion Model for Non Introsive Load Monitoring
+# DifFormer-NILM: A diffusion Model for Non Intrusive Load Monitoring
 This repository contains the implementation of DifFormer-NILM, a novel model leveraging Denoising Diffusion Probabilistic Models (DDPM) and Transformer architecture for Non-Intrusive Load Monitoring (NILM). The model aims to disaggregate household energy consumption into individual appliance usage with high accuracy, particularly in complex, high-density environments. The model uses the UKDALE dataset for evaluation and comparison with state-of-the-art models like BERT4NILM.
